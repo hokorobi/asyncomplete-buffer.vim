@@ -1,6 +1,7 @@
 let s:words = {}
 let s:last_word = ''
 let g:asyncomplete_buffer_clear_cache = get(g:, 'asyncomplete_buffer_clear_cache', 1)
+let g:asyncomplete_buffer_match_pattern = get(g:, 'asyncomplete_buffer_match_pattern', '\w\+$')
 
 function! asyncomplete#sources#buffer#completor(opt, ctx)
     let l:typed = a:ctx['typed']
@@ -15,7 +16,7 @@ function! asyncomplete#sources#buffer#completor(opt, ctx)
 
     let l:col = a:ctx['col']
 
-    let l:kw = matchstr(l:typed, '\w\+$')
+    let l:kw = matchstr(l:typed, g:asyncomplete_buffer_match_pattern)
     let l:kwlen = len(l:kw)
 
     let l:matches = map(keys(s:words),'{"word":v:val,"dup":1,"icase":1,"menu": "[buffer]"}')
